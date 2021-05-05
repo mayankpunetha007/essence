@@ -1,7 +1,7 @@
 package io.github.cdimascio.essence.util
 
 import io.github.cdimascio.essence.scorers.Scorer
-import io.github.cdimascio.essence.words.StopWords
+import io.github.cdimascio.essence.words.StopWordsJa
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.Node
 
@@ -51,7 +51,7 @@ object NodeHeuristics {
         return false
     }
 
-    fun hasFewWordsAndLowFewWordNeighbors(node: Node, stopWords: StopWords): Boolean {
+    fun hasFewWordsAndLowFewWordNeighbors(node: Node, stopWords: StopWordsJa): Boolean {
         if (node is Element) {
             val ownText = node.ownText()
             if (node.childNodeSize() == 0 && (ownText.isBlank() || stopWords.statistics(ownText).stopWords.size < 5)) {
@@ -64,7 +64,7 @@ object NodeHeuristics {
         return false
     }
 
-    private fun hasFewWordPrevSiblings(node: Node, numSibsToCheck: Int, stopWords: StopWords): Boolean {
+    private fun hasFewWordPrevSiblings(node: Node, numSibsToCheck: Int, stopWords: StopWordsJa): Boolean {
         var count = 0
         var prevSib = node.previousSibling()
         while (prevSib != null && count < numSibsToCheck) {
@@ -82,7 +82,7 @@ object NodeHeuristics {
     }
 
 
-    private fun hasFewWordNextSiblings(node: Node, numSibsToCheck: Int, stopWords: StopWords): Boolean {
+    private fun hasFewWordNextSiblings(node: Node, numSibsToCheck: Int, stopWords: StopWordsJa): Boolean {
         var count = 0
         var nextSib = node.nextSibling()
         while (nextSib != null && count < numSibsToCheck) {

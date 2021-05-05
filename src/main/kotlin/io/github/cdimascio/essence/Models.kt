@@ -37,6 +37,7 @@ enum class Language {
     hu,
     id,
     it,
+    ja,
     ko,
     nb,
     nl,
@@ -74,6 +75,7 @@ enum class Language {
             th.name -> Language.th
             tr.name -> Language.tr
             zh.name -> Language.zh
+            ja.name -> Language.ja
             else -> Language.en
         }
     }

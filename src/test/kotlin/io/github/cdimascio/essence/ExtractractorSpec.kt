@@ -3,7 +3,6 @@ package io.github.cdimascio.essence
 import io.github.cdimascio.essence.extractors.Extractor
 import io.github.cdimascio.essence.words.StopWords
 import org.jsoup.Jsoup
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import kotlin.test.assertEquals

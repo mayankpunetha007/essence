@@ -6,6 +6,7 @@ import io.github.cdimascio.essence.extractors.Extractor
 import io.github.cdimascio.essence.formatters.TextFormatter
 import io.github.cdimascio.essence.scorers.DocumentScorer
 import io.github.cdimascio.essence.words.StopWords
+import io.github.cdimascio.essence.words.StopWordsJa
 import org.jsoup.Jsoup
 
 class EssenceParser(private val html: String, language: Language? = null) {
@@ -13,7 +14,7 @@ class EssenceParser(private val html: String, language: Language? = null) {
     private val cleaner = Cleaner(document)
     private val extractor = Extractor(document)
     private val language = language ?: Language.from(extractor.lang())
-    private val stopWords = StopWords.load(this.language)
+    private val stopWords = (if(this.language == Language.ja)  StopWordsJa.load(this.language) else StopWords.load(this.language))
     private val scorer = DocumentScorer(stopWords)
     private val scoredCleaner = ScoreCleaner(stopWords)
     private val formatter = TextFormatter(stopWords)

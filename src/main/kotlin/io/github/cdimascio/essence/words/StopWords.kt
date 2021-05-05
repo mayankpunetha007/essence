@@ -6,20 +6,23 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 
-
-data class StopWordsStatistics(
-    val wordCount: Int,
-    val stopWords: List<String>
-)
-
-class StopWords private constructor(private val stopWords: List<String>) {
+open class StopWords(private val stopWords: List<String>) {
     companion object {
-        fun load(language: Language = Language.en): StopWords {
-            val ins = StopWords::class.java.getResourceAsStream("/stopwords/stopwords-$language.txt")
+        open fun load(language: Language = Language.en): StopWords {
+            val ins = StopWordsJa::class.java.getResourceAsStream("/stopwords/stopwords-$language.txt")
             val words = readFromInputStream(ins)
-            return StopWords(words.map {
-                it.trim().toLowerCase()
-            })
+            return when(language){
+                Language.ja -> {
+                    StopWordsJa(words.map {
+                        it.trim().toLowerCase()
+                    })
+                }
+                else -> {
+                    StopWords(words.map {
+                        it.trim().toLowerCase()
+                    })
+                }
+            }
         }
 
         @Throws(IOException::class)
@@ -36,7 +39,7 @@ class StopWords private constructor(private val stopWords: List<String>) {
         }
     }
 
-    fun statistics(content: String): StopWordsStatistics {
+    open fun statistics(content: String): StopWordsStatistics {
         val cleanedContent = removePunctuation(content)
         val candidates = cleanedContent.split(" ").map { it.toLowerCase() }
         val stopWordsInContent = candidates.filter { word -> stopWords.contains(word) }
